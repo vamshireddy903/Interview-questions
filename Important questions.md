@@ -98,3 +98,39 @@ It automatically syncs the Kubernetes cluster with the updated YAML files.
 This way, the latest Docker image is deployed to the cluster.
 
 This entire CI/CD setup helps us deliver applications faster, more reliably, and with reduced manual intervention, by integrating Jenkins for automation and Argo CD for automated deployment to Kubernetes.
+
+# What is a Namespace in Kubernetes?
+A Namespace in Kubernetes is a virtual cluster or a logical partition within a physical Kubernetes cluster.
+
+# Why Use Namespaces?
+Namespaces help you:
+
+Organize and separate resources.
+
+Avoid name collisions.
+
+Apply resource limits, access control, and policies per group/project/team.
+
+# Common Use Cases:
+Dev, Test, and Prod environments in the same cluster.
+
+Multi-tenant environments where different teams share the same cluster.
+
+Organizing monitoring, logging, or networking components.
+
+     kubectl create namespace dev
+
+![image](https://github.com/user-attachments/assets/096623ed-9037-4c76-9634-6e0f016500bf)
+
+# Useful Commands:
+
+View all namespaces:
+
+     kubectl get namespaces
+
+      kubectl get pods -n dev
+
+Set a default namespace in your kubeconfig:
+
+      kubectl config set-context --current --namespace=dev
+
