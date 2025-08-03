@@ -1,6 +1,17 @@
 # 1. You have created five EC2 instances using Terraform. Now you want to delete only one specific instance without deleting the others. How will you do it?
    Let say you have creatd EC2 instances using for_each
-   
+```
+ resource "aws_instance" "multiple" {
+  for_each = toset(["1", "2", "3", "4", "5"])
+
+  ami           = ""
+  instance_type = ""
+
+  tags = {
+    Name = "Server-${each.value}"
+  }
+}
+```
    <img width="692" height="701" alt="image" src="https://github.com/user-attachments/assets/fc4a8bad-352f-4fda-933b-1b1f2c67b8bb" />
    <img width="589" height="756" alt="image" src="https://github.com/user-attachments/assets/55dc52bf-2434-498f-9fe3-b6891a6a25b7" />
    <img width="850" height="485" alt="image" src="https://github.com/user-attachments/assets/2f914cb9-a608-4123-889b-170e970aa851" />
@@ -82,5 +93,24 @@ resource "aws_instance" "my_ec2" {
 }
 ```
 <img width="1014" height="257" alt="image" src="https://github.com/user-attachments/assets/4a98a70e-8862-4745-935a-a30ebe924248" />
+
+# 5 Write a terraform code to create the RDS 
+
+```
+resource "aws_db_instance" "My_rds" {
+
+    engine = "mysql"
+    engine_version = "8.0"
+    allocated_storage = "10"
+    storage_type = "gp2"
+    instance_class = "db.t3.micro"
+    db_name = "mydb"
+    username = "admin"
+    password = "password123"
+    skip_final_snapshot = true
+    publicly_accessible = true
+}
+```
+
 
 
