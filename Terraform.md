@@ -260,3 +260,6 @@ You need to detect drift or recover accurate state
 🆕 Newer Alternative:
 
     terraform apply -refresh-only
+
+<img width="1108" height="719" alt="image" src="https://github.com/user-attachments/assets/e27e0748-1ea8-4b56-9def-8a1c8a860f59" />
+
