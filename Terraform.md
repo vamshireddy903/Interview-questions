@@ -112,5 +112,151 @@ resource "aws_db_instance" "My_rds" {
 }
 ```
 
+#  What is Remote Backend in Terraform?
+A backend in Terraform defines how and where Terraform stores its state file (terraform.tfstate).
+
+By default, Terraform stores the state locally on your machine.
+
+✅ Remote backend stores the state file in a remote location like:
+AWS S3
+
+Terraform Cloud
+
+Azure Blob Storage
+
+Google Cloud Storage
 
 
+# 🔒 Why Remote Backends Are Important:
+Collaboration – Teams can share the same state file.
+
+Safety – Keeps state out of local machines (less risk of loss).
+
+Versioning – Some backends (like S3) support versioning and recovery.
+
+Locking – Prevents multiple users from applying changes at the same time (see next section).
+
+# 🔐 What is State Locking in Terraform?
+State locking is a mechanism that ensures:
+
+Only one person or process can change the state file at a time.
+
+✅ Purpose:
+Prevent race conditions when two people try to run terraform apply at the same time.
+
+Avoid corrupted or inconsistent infrastructure changes.
+
+```
+# Create a S3 bucket
+
+resource "aws_s3_bucket" "bucket" {
+    bucket = "aws-s3my-bucketing6752"  
+
+}
+
+#Encryption at rest
+resource "aws_s3_bucket_versioning" "versioning_example" {
+  bucket = aws_s3_bucket.bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
+  bucket = aws_s3_bucket.bucket.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "AES256"
+    }
+  }
+}
+
+#Creating DynamoDB table
+
+resource "aws_dynamodb_table" "table" {
+  name         = "Dynamo-db-state-locking"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "LockID"
+
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+}
+```
+# Backend
+
+```
+terraform {
+  backend "s3" {
+    bucket = "aws-s3my-bucketing6752"
+    dynamodb_table = "Dynamo-db-state-locking"
+    key = "statelocking/terraform.tfstate"
+    region = "ap-south-1"
+    encrypt = true
+        
+  }
+}
+```
+
+# 1. terraform init -migrate-state
+🔄 Purpose:
+Used when you're changing backends (e.g., from local to S3) and want to move the existing state to the new backend.
+
+🧠 What It Does:
+Migrates your existing terraform.tfstate from the current backend (e.g., local) to the new one (e.g., S3).
+
+Keeps your infrastructure state consistent during the move.
+
+📦 Use Case:
+
+ ```
+# You updated your backend config:
+terraform {
+  backend "s3" {
+    bucket = "my-state-bucket"
+    key    = "dev/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+```
+
+ Then run
+
+         terraform init -migrate-state
+# ✅ 2. terraform init -reconfigure
+🔄 Purpose:
+Used when you want to reinitialize the backend without migrating state.
+
+🧠 What It Does:
+Re-initializes Terraform from scratch
+
+Accepts the current backend config as-is
+
+Does not attempt to move existing state (unlike -migrate-state)
+
+📦 Use Case:
+You deleted or changed the backend config (e.g., removed S3 backend)
+
+Or you just want to reset the backend setup
+
+# ✅ 3. terraform refresh
+🔄 Purpose:
+Used to update your Terraform state file to match the real infrastructure.
+
+🧠 What It Does:
+Queries cloud providers (e.g., AWS, Azure) for the current status of your resources
+
+Updates terraform.tfstate with latest real-world data
+
+Does not apply changes or alter .tf files
+
+📦 Use Case:
+Infra was changed outside Terraform
+
+You need to detect drift or recover accurate state
+
+🆕 Newer Alternative:
+
+    terraform apply -refresh-only
