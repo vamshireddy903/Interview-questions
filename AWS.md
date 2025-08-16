@@ -68,3 +68,35 @@ Use MFA (Multi-Factor Authentication) for added security
 Following the least privilege principle helps reduce the risk of accidental or malicious access. For example, if you give a user access to only S3:ReadOnly, they can’t delete or write anything.
 
 If IAM permissions are misconfigured, it could lead to unauthorized access, data loss, or security breaches, which is why IAM is considered the foundation of cloud security.
+
+# AWS Secrets Manager:
+AWS Secrets Manager is a fully managed service that helps you store, manage, and retrieve sensitive information securely in AWS. This includes credentials like database passwords, API keys, and other secrets.
+
+# Key Features
+
+# Secure Storage
+Secrets are encrypted at rest using AWS KMS (Key Management Service).
+
+Access is controlled via IAM policies, so only authorized users or services can retrieve them.
+
+# Automatic Rotation
+Secrets Manager can automatically rotate secrets for supported databases (e.g., RDS, Aurora) without downtime.
+
+Reduces risk of using old or compromised credentials.
+
+# Centralized Management
+All secrets are stored in one place.
+
+Easy to audit who accessed which secret using CloudTrail.
+
+# Programmatic Access
+Applications can retrieve secrets at runtime using AWS SDKs or CLI.
+
+Eliminates the need to hard-code passwords in code or configuration files.
+
+# Example Use Cases
+Storing database credentials for an EC2 instance or Lambda function.
+
+Storing API keys for third-party services.
+
+Storing OAuth tokens for applications.
