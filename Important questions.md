@@ -134,3 +134,66 @@ Set a default namespace in your kubeconfig:
 
       kubectl config set-context --current --namespace=dev
 
+
+# How do you design a disaster recovery plan for multi-region microservices?
+
+Multi-region deployment: Deploy microservices in active-active or active-passive mode across regions.
+
+Data replication: Use cross-region replication for databases (e.g., RDS, DynamoDB, MongoDB Atlas).
+
+Infrastructure as Code (IaC): Manage environments via Terraform/CloudFormation so you can recreate the stack quickly.
+
+Backup & snapshot strategy: Regular database backups, container images, and config snapshots.
+
+Health checks & failover: Implement DNS failover (Route 53) or load balancer routing to healthy regions.
+
+Testing: Regularly run DR drills to ensure recovery time objective (RTO) and recovery point objective (RPO) are met.
+
+# How do you manage zero-downtime DB migrations in production?
+
+Blue-Green / Rolling migrations: Deploy new schema alongside old schema; migrate data gradually.
+
+Backward-compatible changes: Add columns instead of removing them, avoid breaking queries.
+
+Feature flags: Enable new features only when migration is complete.
+
+Migration tools: Use tools like Liquibase, Flyway, or custom scripts with transaction support.
+
+Read/write decoupling: If necessary, direct writes to new schema while reads can still happen on the old one temporarily.
+
+# Can your CI/CD pipeline handle 1000+ deployments daily?
+
+Pipeline design: Use parallelism and microservices-based pipelines.
+
+Artifact management: Store pre-built container images and dependencies in a registry (Docker Hub, ECR).
+
+Automation & scaling: Use auto-scaling runners (Jenkins, GitHub Actions, GitLab Runners).
+
+Canary & rolling deployments: Gradually release to avoid impacting production.
+
+Monitoring & alerts: Continuous verification and rollback strategy in case of failures.
+
+# How do you cut cloud costs by 40% without hurting performance?
+
+Right-sizing: Resize underutilized instances; use spot/preemptible instances.
+
+Auto-scaling: Ensure resources scale dynamically with load.
+
+Storage optimization: Use S3 Glacier, lifecycle policies, and compressed formats.
+
+Serverless / managed services: Shift workloads to Lambda, Fargate, or managed DBs to reduce overhead.
+
+Cost monitoring: Use AWS Cost Explorer or CloudWatch metrics to identify inefficiencies.
+
+# What’s your plan if monitoring looks green but users still report issues?
+
+Validate monitoring coverage: Ensure all critical paths, API endpoints, and front-end flows are monitored.
+
+Synthetic monitoring: Simulate user flows to detect issues not captured by standard metrics.
+
+Logs & tracing: Use ELK stack, CloudWatch Logs, or OpenTelemetry for deep diagnostics.
+
+User feedback loop: Collect real-time user reports and correlate with logs/traces.
+
+Incident response: Open a ticket, perform root cause analysis, and deploy fixes without assuming green = healthy.
+
