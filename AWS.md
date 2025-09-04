@@ -100,3 +100,83 @@ Storing database credentials for an EC2 instance or Lambda function.
 Storing API keys for third-party services.
 
 Storing OAuth tokens for applications.
+
+# Problem: When you run out of disk space on an EC2 instance, applications or services may stop working because the root volume (/) is full.
+
+Solution (3 Steps)
+
+Step 1: Expand the Volume in AWS Console
+================================
+Go to AWS Console → EC2 → Volumes
+Select your root volume
+Click Modify Volume
+Increase the size and click Save
+
+Step 2: Check Your Instance Disk
+======================================
+SSH into the EC2 instance
+Run:
+
+     lsblk
+
+This lists block devices (disks and partitions) so you can confirm the new size
+
+Step 3: Grow & Resize the Root Volume
+=============================================
+Install the required utility (cloud-guest-utils), which provides the growpart
+
+      sudo apt-get install cloud-guest-utils -y
+
+# Grow the partition to use the new space:
+          
+      sudo growpart /dev/xvda 1
+
+Here: 
+/dev/xvda = disk
+1 = partition number
+
+# Resize the filesystem:
+
+    sudo resize2fs /dev/xvda1
+
+Here
+resize2fs → A Linux tool used to resize ext2/ext3/ext4 filesystems.
+/dev/xvda1 → The partition where your root filesystem (/) is located.
+
+
+
+🔹 lsblk Meaning
+========================
+lsblk = List Block Devices
+It shows all the block devices on your system (disks, partitions, loop devices, etc.).
+
+A block device is any device that stores data in fixed-size blocks, like:
+
+Hard disks (HDD/SSD)
+
+EBS volumes (in AWS)
+
+USB drives
+
+Partitions (like /dev/xvda1)
+
+Loop devices (snap packages mount these as virtual disks in Ubuntu)
+
+<img width="882" height="341" alt="image" src="https://github.com/user-attachments/assets/affd9163-d200-47a6-82b4-b40f68dbb104" />
+
+Columns Explained
+
+NAME → Device name (xvda, xvda1, etc.)
+
+SIZE → Size of disk/partition
+
+TYPE → disk / part (partition) / loop
+
+MOUNTPOINTS → Where it’s mounted (/, /boot, /boot/efi)
+
+<img width="1013" height="622" alt="image" src="https://github.com/user-attachments/assets/68d456f8-8c8e-4cc1-a108-7a117bc067a3" />
+
+RM = 0 → Not removable (EBS is persistent storage).
+
+RO = 0 → Not read-only (you can write to it).
+
