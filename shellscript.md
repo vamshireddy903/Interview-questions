@@ -41,3 +41,7 @@ Here:
 First configure mail.sh and then execute disk_check.sh
 
  [script](https://github.com/vamshireddy903/Interview-questions/tree/main/Shellscript_tasks)
+
+# 8 Write script to check the status of the docker and restart
+[docker status_restart_scipt](https://github.com/vamshireddy903/Interview-questions/blob/main/Shellscript_tasks/docker_status_restart.sh)
+
