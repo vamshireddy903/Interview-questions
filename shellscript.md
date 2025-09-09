@@ -35,3 +35,9 @@ Here:
 
 # 6 Write a Bash script to check if Git is installed on a Linux system, detect the package manager (yum or apt), and install Git if it is not already installed.
 [script](https://github.com/vamshireddy903/Interview-questions/blob/main/Shellscript_tasks/git_install.sh)
+
+# 7 Write a shell script to monitor the disk usage and configure the email
+
+First configure mail.sh and then execute disk_check.sh
+
+ [script](https://github.com/vamshireddy903/Interview-questions/tree/main/Shellscript_tasks)
