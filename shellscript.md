@@ -34,4 +34,4 @@ Here:
    2.43.0-1ubuntu1 → version installed.
 
 # 6 Write a Bash script to check if Git is installed on a Linux system, detect the package manager (yum or apt), and install Git if it is not already installed.
-[script](https://github.com/vamshireddy903/Interview-questions/blob/main/installgit.sh)
+[script](https://github.com/vamshireddy903/Interview-questions/blob/main/Shellscript_tasks/git_install.sh)
