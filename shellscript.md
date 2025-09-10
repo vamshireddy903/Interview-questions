@@ -81,4 +81,82 @@ All arguments passed to the script are combined into one string.
 
 Words are separated by the first character of IFS (usually a space).
 
+# 9 Write a Bash script that reads a system log file (e.g., /var/log/syslog) and performs the following tasks:
+
+Search for all lines containing the word "error" (case-insensitive).
+
+Print the matched log lines on the screen.
+
+Display the total count of lines containing the word "error".
+
+[error_check.sh](https://github.com/vamshireddy903/Interview-questions/blob/main/Shellscript_tasks/error_check.sh)
+
+# What is sed?
+
+sed is a command-line text editor used to search, replace, insert, or delete text in a file or input stream — without opening an editor.
+
+# Print file contents (default behavior with -n and p)
+
+      sed -n 'p' file.txt
+      
+equivalent cat text.txt
+
+# Replace first occurrence of a word in each line
+
+    sed 's/error/warning/' filename.txt
+
+➡ replaces the first occurrence of "error" with "warning".
+
+# Case-insensitive replace
+
+    sed 's/error/warning/Ig' logfile.txt
+
+➡ replaces "error", "Error", "ERROR", etc. with "warning".
+
+# Delete a line (e.g., line 3)
+
+    sed '3d' filename.txt
+
+# Delete lines containing a keyword
+
+    sed '/error/d' filename.txt
+
+# Display the last line of the file
+
+     sed -n '$p' filename.txt
+
+# Display the content from 1-5 line of the file
+
+     sed -n '1,5p' filename.txt
+
+# Delete the perticular line of the content
+
+    sed -i '2d' filename.txt
+
+It will delete the second line
+
+# Delete 4 and 5 th line and take backup before deleting
+
+     sed -i.back '4,5d' filename.txt
+
+<img width="1678" height="798" alt="image" src="https://github.com/user-attachments/assets/a0c36e24-3c6c-4f70-b675-ee8c1af78853" />
+
+# Find the text and replace with new word in 1st occurance
+
+     sed -i 's/hello/hi/' filename.txt
+
+
+<img width="388" height="173" alt="image" src="https://github.com/user-attachments/assets/3b5190af-1825-439f-82cc-3c48dae719f4" />
+
+# Find the text and replace with new word in globally
+
+     sed -i 's/hello/hi/g' filename.txt
+
+# Insert a line before line 5
+
+     sed '5i This is a new line' filename.txt
+
+# Append a line after line 5
+
+    sed '5a This is an appended line' file.txt
 
