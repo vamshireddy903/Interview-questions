@@ -180,3 +180,102 @@ RM = 0 → Not removable (EBS is persistent storage).
 
 RO = 0 → Not read-only (you can write to it).
 
+# EC2 Key Pair & SSH Access Interview Q&A
+
+# 1. What happens if you lose the private key of an EC2 instance? Can AWS recover it for you?
+
+f you lose the private key file, you cannot SSH into the instance. AWS cannot recover the private key since it never stores it — it only gives it once at creation.
+
+# 2. What are the steps to regain access to an EC2 instance after losing the key pair?
+Common method:
+
+Stop the instance.
+
+Detach its root volume.
+
+Attach it to a helper instance.
+
+Mount the volume and add a new public key to ~/.ssh/authorized_keys.
+
+Detach and reattach the volume to the original instance.
+
+Start the instance and SSH with the new key.
+
+# How do you mount and modify the root volume of an EC2 instance on another helper instance?
+Attach the volume, check with lsblk, mount it (e.g., /mnt/recovery), navigate to /home/ubuntu/.ssh/authorized_keys, edit the file, and unmount safely before detaching.
+
+# Where do you usually place the public key in Linux so that SSH works?
+ In the file:
+/home/<username>/.ssh/authorized_keys
+Permissions must be strict (.ssh = 700, authorized_keys = 600).
+
+# What’s the difference between deleting a key pair in the AWS console vs. losing the local .pem file?
+
+Deleting in AWS console only removes AWS metadata; existing instances are unaffected.
+
+Losing .pem locally means you can’t SSH unless you had a backup.
+
+# If an EC2 instance is using Systems Manager (SSM Agent), how could you still access it without the private key?
+
+You can use AWS SSM Session Manager to open a shell directly from the console or CLI — no SSH or key needed.
+
+# How can you create a new .pub file from a .pem file?
+
+       ssh-keygen -y -f my-key.pem > my-key.pub
+
+# What’s the purpose of the authorized_keys file in Linux?
+ It stores public keys allowed to log in via SSH. If your public key is inside this file, you can authenticate using your private key.
+
+ # Which user directory (/home/ubuntu, /root, etc.) do you update the .ssh/authorized_keys file in?
+It depends on the default SSH user for the AMI:
+
+Ubuntu AMI → /home/ubuntu
+
+Amazon Linux → /home/ec2-user
+
+CentOS → /home/centos
+
+Root login → /root
+
+# What are potential risks when detaching/attaching EBS volumes for recovery?
+ Risks:
+
+Wrong volume attachment may corrupt data.
+
+Forgetting to unmount before detaching can cause file system corruption.
+
+Human errors like editing wrong user’s .ssh file.
+
+# What IAM permissions are required to perform this recovery process?
+ You need:
+
+ec2:StopInstances, ec2:StartInstances
+
+ec2:AttachVolume, ec2:DetachVolume
+
+ec2:DescribeInstances, ec2:DescribeVolumes
+
+# Can you recover the same lost private key from AWS if it was deleted? Why or why not?
+No, because AWS never stores the private key. It only stores the public half.
+
+# If your EC2 is in production, what preventive steps should you take to avoid key loss issues?
+
+Store keys securely (Secrets Manager, Vault).
+
+Use SSM Session Manager.
+
+Create and register multiple key pairs.
+
+Restrict and audit access.
+
+Always back up .pem securely.
+
+# What alternatives to SSH key pairs exist for accessing EC2 securely?
+
+AWS Systems Manager Session Manager
+
+IAM roles with temporary credentials
+
+AWS IAM Identity Center (SSO)
+
+Federation with corporate directory
