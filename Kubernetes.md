@@ -121,3 +121,107 @@ Real Implementation:
 # Production Rule: 
 No public east-west traffic. Ever.
 
+# Deployment strategies
+
+# 1️⃣ Rolling Update
+
+Definition:
+A rolling update gradually replaces the old version of an application with the new version without downtime. Only a few pods are updated at a time.
+
+# How it works:
+
+Kubernetes updates pods incrementally.
+
+Old pods are terminated only after new pods are running and healthy.
+
+Users experience continuous availability.
+
+# Pros:
+
+No downtime.
+
+Simple to implement in Kubernetes (kubectl set image or Deployment strategy).
+
+# Cons:
+
+If the new version has a bug, it may impact some users before rollback.
+
+Example in Kubernetes:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
+```
+maxUnavailable: 1 → Only 1 pod can be down at a time.
+
+maxSurge: 1 → At most 1 extra pod is created during update.
+
+# 2️⃣ Canary Deployment
+
+Definition:
+A canary deployment releases the new version to a small subset of users first. Once it is verified to be stable, the deployment is rolled out to everyone.
+
+# How it works:
+
+Only a few pods serve traffic with the new version.
+
+Monitor logs, metrics, and errors.
+
+Gradually increase traffic to new pods.
+
+# Pros:
+
+Safer than rolling update for risky changes.
+
+Early detection of issues with limited impact.
+
+# Cons:
+
+Requires traffic routing control (Ingress, Service Mesh, or Load Balancer).
+
+Slightly more complex to implement.
+
+# Example:
+
+1 out of 10 pods runs version v2 while 9 run v1.
+
+If no errors, increase v2 pods gradually until 100%.
+
+# 3️⃣ Blue-Green Deployment
+
+Definition:
+In a blue-green deployment, two identical environments exist: blue (current) and green (new). Traffic is switched from blue to green all at once.
+
+# How it works:
+
+Deploy the new version to green environment.
+
+Test it without affecting live users.
+
+Switch traffic from blue → green (DNS, Load Balancer, or Ingress).
+
+Keep blue environment as backup in case rollback is needed.
+
+# Pros:
+
+Zero downtime if configured correctly.
+
+Easy rollback by switching traffic back to blue.
+
+# Cons:
+
+Requires double infrastructure (costly for large-scale apps)
+
+<img width="907" height="348" alt="image" src="https://github.com/user-attachments/assets/29dbd2d3-69bf-49cc-ae1a-83c14c6fac30" />
+
+
