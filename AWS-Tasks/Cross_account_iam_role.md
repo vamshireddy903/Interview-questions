@@ -121,3 +121,60 @@ export AWS_SESSION_TOKEN=FQoGZXIvYXdzE...
     aws s3 cp test.txt s3://your-bucket-name/
 
 This should throw an "Access Denied" error
+
+# Download a Whole Bucket
+
+If you want to download all files from a bucket or a folder in S3:
+
+    aws s3 cp s3://my-bucket/ </path/to/download> --recursive
+
+  # Get the object or list the objects
+
+      aws s3 ls s3://<bucket name>
+
+  # Create a bucket
+
+       aws s3 mb s3://<bucket name>
+
+  # Download a object
+
+      aws s3 cp s3://my-bucket/example.txt .
+
+  # Put object or upload a file
+
+      aws s3 cp <file name> s3://<bucket name>
+
+  # Delete a object
+
+       aws s3 rm s3://<bucket-name>/<object-key>
+
+ Example
+# Delete a single file called example.txt from a bucket my-bucket:
+
+     aws s3 rm s3://my-bucket/example.txt
+
+# Delete All Files in a Bucket or Folder
+To delete all objects recursively from a bucket or a folder:
+
+    aws s3 rm s3://my-bucket/ --recursive
+
+ # Delete an Empty Bucket
+    
+    aws s3 rb s3://<bucket-name>
+    
+rb = remove bucket
+
+Example:
+     
+     aws s3 rb s3://my-bucket
+
+# Delete a Bucket and All Its Contents
+If the bucket is not empty, you can use the --force flag to delete all objects and then the bucket:
+
+    aws s3 rb s3://my-bucket --force
+
+This will:
+
+Delete all objects inside the bucket.
+
+Delete the bucket itself.
