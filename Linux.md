@@ -284,3 +284,5 @@ iptables -L -n -v
 # Answer in interview:
 I’ll first run ping and mtr to confirm packet loss and identify where it occurs. Then, I’ll use traceroute to check which hop is causing the drop. If it’s on my server, I’ll check NIC stats with ip -s link and ethtool. If it’s external, I’ll escalate to the ISP or network team.
 <img width="915" height="547" alt="image" src="https://github.com/user-attachments/assets/7eba4c0d-873a-4491-a579-0b031b742974" />
+
+use hostname -I or ip addr to get my private IP, and curl ifconfig.me to see my public IP. The private IP is used within the LAN, while the public IP is assigned by the ISP and visible on the internet.
