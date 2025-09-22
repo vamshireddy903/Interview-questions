@@ -49,3 +49,17 @@ You can attach multiple EBS volumes to a single EC2 instance.
 - Optimizing IOPS by spreading workloads across multiple volumes
 
 for more info: https://docs.aws.amazon.com/hands-on/latest/amazon-ebs-backup-and-restore-using-aws-backup/amazon-ebs-backup-and-restore-using-aws-backup.html
+
+<img width="1868" height="872" alt="image" src="https://github.com/user-attachments/assets/607be9e3-7b5a-4f84-a5d3-4b8e240ca473" />
+
+<img width="1742" height="642" alt="image" src="https://github.com/user-attachments/assets/a2f718ea-3f80-473a-9c8a-d146d25c1d4a" />
+
+<img width="1756" height="1025" alt="image" src="https://github.com/user-attachments/assets/80171fef-87ff-4674-a232-819ff4616428" />
+
+<img width="1793" height="1048" alt="image" src="https://github.com/user-attachments/assets/a1d3fa40-13dd-4706-8675-85accfeacab6" />
+
+<img width="1819" height="1050" alt="image" src="https://github.com/user-attachments/assets/0c94087d-ea8d-4ee1-843a-63b29f55fc20" />
+
+
+
+
