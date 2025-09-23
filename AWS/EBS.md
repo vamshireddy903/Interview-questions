@@ -147,7 +147,9 @@ Add a output line at the end like this
 
 UUID=7cf8f647-7231-4e9c-aa3e-bc0fe3d384f7   /myebs   xfs   defaults,nofail   0   2
 
-# if you increase again 5g to 10 g then
+# Increasing the volume
+
+if you increase again 5g to 10 g then
 
 just run 
 
