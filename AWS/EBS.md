@@ -129,7 +129,7 @@ Formats the volume with XFS filesystem so it can be mounted and used to store fi
 sudo mkdir /myebs
 sudo mount /dev/xvdk /myebs
 ```
-Creates a mount point /mnt/ebs and mounts the formatted EBS volume there so files can be stored.
+Creates a mount point /myebs and mounts the formatted EBS volume there so files can be stored.
 
 <img width="886" height="562" alt="image" src="https://github.com/user-attachments/assets/ed6e4afe-66c2-4c03-8b42-0dc07866536b" />
 
