@@ -177,3 +177,31 @@ stat file.txt
 
     history
 
+# Booting:   
+ Booting means the process of starting a computer or server and loading the operating system (OS) into memory so it becomes ready to use.
+
+# 🔹 Steps in the Booting Process
+
+Power On – You turn on the machine.
+
+POST (Power-On Self Test) – Hardware components (CPU, RAM, storage, etc.) are checked.
+
+Boot Loader Runs – A small program (like GRUB in Linux or Windows Boot Manager) is loaded.
+
+OS Kernel Loads – The core of the operating system is copied into RAM.
+
+Initialization – OS services, drivers, and user processes start.
+
+Login Screen – System is ready for user interaction.
+
+🔹 Types of Booting
+
+**Cold Boot:** Starting the computer after it was completely powered off.
+
+**Warm Boot (Reboot):** Restarting the system without turning off the power (like using reboot in Linux or "Restart" in Windows).
+
+# 🔹 In AWS/Cloud (context for you):
+
+When you launch an EC2 instance, booting happens using its EBS root volume, which contains the OS image (Amazon Linux, Ubuntu, Windows, etc.).
+
+That’s why the EBS root volume is often called a boot volume.
