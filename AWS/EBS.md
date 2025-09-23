@@ -197,6 +197,7 @@ Your / mount should now reflect the new expanded size.
 <img width="1006" height="757" alt="image" src="https://github.com/user-attachments/assets/09456fdb-a329-43c2-a275-055528c1c0b1" />
 
 
+<img width="975" height="717" alt="image" src="https://github.com/user-attachments/assets/9d9365c8-50ef-4a12-997b-d7a4a28a2b59" />
 
 
 
