@@ -149,6 +149,11 @@ UUID=7cf8f647-7231-4e9c-aa3e-bc0fe3d384f7   /myebs   xfs   defaults,nofail   0  
 
 # if you increase again 5g to 10 g then
 
+just run 
+
+     sudo xfs_growfs /myebs
+or 
+
 <img width="691" height="485" alt="image" src="https://github.com/user-attachments/assets/e7796407-3c3d-4a21-a5c9-b61061f0461d" />
 
 
