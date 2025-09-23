@@ -148,15 +148,52 @@ Add a output line at the end like this
 UUID=7cf8f647-7231-4e9c-aa3e-bc0fe3d384f7   /myebs   xfs   defaults,nofail   0   2
 
 # Increasing the volume
+===============================================
 
-if you increase again 5g to 10 g then
+# 1. Expand the volume in AWS Console
 
-just run 
+Go to EC2 → Volumes → your root volume
 
-     sudo xfs_growfs /myebs
-or 
+Modify it (say from 8G → 20G).
 
-<img width="691" height="485" alt="image" src="https://github.com/user-attachments/assets/e7796407-3c3d-4a21-a5c9-b61061f0461d" />
+Wait until the state shows "in-use" (resize completed).
+
+# 2. Grow the partition
+
+Use growpart on the correct partition:
+
+    sudo growpart /dev/xvda 1
+
+Here 1 means partition number (/dev/xvda1).
+
+# Resize filesystem
+
+Now depending on your filesystem  
+check the filesystem type
+
+     lsblk -f
+
+<img width="1480" height="282" alt="image" src="https://github.com/user-attachments/assets/f9564ff6-0335-49f9-8ff5-db2ab3745c7e" />
+
+If ext4:
+
+    sudo resize2fs /dev/xvda1
+
+If XFS:
+
+    sudo xfs_growfs /<mount/point>
+ 
+
+
+# Verify
+
+Check the new size:
+
+    df -h
+
+Your / mount should now reflect the new expanded size.
+
+
 
 
 
