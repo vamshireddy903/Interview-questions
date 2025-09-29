@@ -407,3 +407,37 @@ The mydata volume is still available:
 
 # Interview one-liner
 If a container is deleted but the volume is not removed, the data in the volume persists and can be reused by other containers.
+
+# How do u take the bakcup of a running container
+
+# 1. Backup the Container’s Filesystem
+
+This will give you a snapshot of the container’s current state (like making an image of it).
+```
+docker commit <container_name_or_id> my-backup-image
+docker save -o my-backup-image.tar my-backup-image
+```
+# Run a new container directly from that image
+
+    docker run -d --name my-new-container my-backup-image
+
+**docker commit** → creates a new image from the running container.  
+**docker save**→ exports the image into a .tar file you can store/transfer.
+
+- You want to move the backup image to another host.  
+- You want to store the image file for future use.  
+Later you can restore with:
+```
+docker load -i my-backup-image.tar
+docker run -d my-backup-image
+```
+
+# 2. Backup Data from a Volume
+
+If your container uses a volume for persistence, you should back up that instead of the whole container.
+
+# Best practice:
+
+- Use volumes for application data.  
+- Back up volumes (not the container itself) since containers are ephemeral.    
+- Use docker commit only if you need to capture changes inside a running container.
