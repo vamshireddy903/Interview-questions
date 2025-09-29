@@ -199,7 +199,39 @@ Your / mount should now reflect the new expanded size.
 
 <img width="975" height="717" alt="image" src="https://github.com/user-attachments/assets/9d9365c8-50ef-4a12-997b-d7a4a28a2b59" />
 
+# When you terminate an EC2 instance, what happens to the attached EBS volumes? Do they get deleted as well?”
 
+✅ Expected Answer:
+
+- **Root EBS Volume:**
+By default, the root volume (the one where the OS is installed) is set with Delete on Termination = true, so it gets deleted automatically when you terminate the EC2.
+
+- **Additional/Attached EBS Volumes:**
+By default, these have Delete on Termination = false, so they will persist even after the EC2 instance is terminated. You’ll still be charged unless you delete them manually.
+
+- **But:** You can modify the Delete on Termination setting (either at launch or later) for any EBS volume.
+
+   - If it’s true → volume will be deleted on termination.  
+   - If it’s false → volume stays after termination, and you can reattach it to another instance.
+
+```
+     aws ec2 modify-instance-attribute \
+     --instance-id <instance-id> \
+     --block-device-mappings DeviceName=/dev/xvda,Ebs={DeleteOnTermination=false}
+ ```
+
+- <instance-id> with your EC2 instance ID
+- /dev/xvda with your actual root device name (usually /dev/xvda or /dev/sda1)
+
+# Bonus Points to Mention:
+
+- **Data safety:** Keeping false ensures data isn’t lost accidentally.
+- **Cost implication:** If you forget to delete, you keep paying for unused EBS volumes.
+- **Snapshots:** Even if a volume is deleted, you can restore it later if you’ve taken snapshots.
+
+👉 A solid interview-ready short version could be:
+
+By default, the root EBS volume is deleted when the EC2 is terminated, while additional EBS volumes persist. This behavior depends on the Delete on Termination flag, which can be configured per volume
 
 
 
