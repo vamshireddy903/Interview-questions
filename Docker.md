@@ -441,3 +441,7 @@ If your container uses a volume for persistence, you should back up that instead
 - Use volumes for application data.  
 - Back up volumes (not the container itself) since containers are ephemeral.    
 - Use docker commit only if you need to capture changes inside a running container.
+
+# To check how much memory each running container is using,
+
+     docker stats --no-stream
