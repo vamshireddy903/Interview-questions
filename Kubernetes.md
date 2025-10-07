@@ -224,4 +224,24 @@ Requires double infrastructure (costly for large-scale apps)
 
 <img width="907" height="348" alt="image" src="https://github.com/user-attachments/assets/29dbd2d3-69bf-49cc-ae1a-83c14c6fac30" />
 
+# Kubernetes Service 
+
+In Kubernetes, a Service is a method for exposing a network application in the cluster. We use a Service to make that set of Pods available on the network so that users can interact with it.
+
+There are 3 types of Kubernetes services: ClusterIP, NodePort and LoadBalancer. The “type” property in the Service’s specification determines how the service is exposed to the network.
+
+# Kubernetes Service Types
+**ClusterIP**
+
+ClusterIP is the default and most common service type. Kubernetes will assign a cluster-internal IP address to ClusterIP service. This makes the service only reachable within the cluster.
+
+**NodePort**
+
+This exposes the service outside of the cluster by adding a cluster-wide port on top of ClusterIP. We can request the service by NodeIP:NodePort.
+
+**LoadBalancer**
+
+This exposes the Service externally using a cloud provider’s load balancer.
+
+
 
