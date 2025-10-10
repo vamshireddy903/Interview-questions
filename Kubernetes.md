@@ -331,4 +331,40 @@ Let’s try and understand step-by-step what happens behind the scenes once you 
 
 **Step 7:** The Scheduler sends the pod status back to the API Server, and the API Server stores this information in the ETCD
 
+# What is a Namespace in Kubernetes?
 
+A namespace is like a virtual cluster inside your Kubernetes cluster.   
+It’s a way to divide and organize resources so multiple teams, projects, or environments can share the same cluster without interfering with each other.
+
+# Why Namespaces Are Useful
+
+**Isolation:**  
+Resources in one namespace don’t clash with others (e.g., two apps can both have a Service named frontend — in different namespaces).
+
+**Organization:**  
+You can group resources logically — like:
+
+- dev for development  
+- staging for testing  
+- prod for production  
+
+**Access control:**  
+You can apply RBAC (Role-Based Access Control) per namespace to restrict access.
+
+**Resource limits:**  
+You can set resource quotas per namespace (e.g., limit CPU/memory usage for a team).
+
+# Common Commands
+
+
+`kubectl get namespaces`                                    - Lists all namespaces
+
+`kubectl create namespace dev`                              - Creates a new namespace called `dev`
+
+`kubectl delete namespace dev`                              - Deletes a namespace
+
+`kubectl get pods -n dev`                                   - Lists pods in the `dev` namespace
+
+`kubectl apply -f app.yaml -n dev`                          - Deploys a manifest to the `dev` namespace
+
+`kubectl config set-context --current --namespace=dev`      - Sets default namespace for your current session
