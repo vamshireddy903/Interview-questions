@@ -94,3 +94,16 @@ Example: Backups in another region for quick restore.
 Distributes traffic across multiple servers to avoid overloading one server.
 
 Example: AWS Elastic Load Balancer (ELB) spreads traffic across multiple EC2 instances.
+
+# What is Azure devops
+Azure DevOps is a set of services that help you manage the entire software development lifecycle (SDLC).  
+It integrates CI/CD (Continuous Integration & Continuous Deployment), project tracking, version control, and testing tools.
+
+<img width="1116" height="606" alt="image" src="https://github.com/user-attachments/assets/a21adefe-f9f2-4fe2-8651-fbb29eea7919" />
+
+<img width="979" height="644" alt="image" src="https://github.com/user-attachments/assets/5bbae9fb-e197-488a-aa71-0d32c51f8a8e" />
+
+<img width="1081" height="649" alt="image" src="https://github.com/user-attachments/assets/125dbe96-209b-4bda-ad74-1e8c41ed27b0" />
+
+
+
