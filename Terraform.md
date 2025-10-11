@@ -218,13 +218,13 @@ Creates two EC2s: app1 with t2.micro and app2 with t3.micro
 Example: EC2 Module
 
 # Folder structure:
-
+<pre>
 modules/
 └── ec2/
     ├── main.tf
     ├── variables.tf
     └── outputs.tf
-
+</pre>
 
 modules/ec2/variables.tf
 ```
@@ -313,7 +313,7 @@ module "vpc" {
 
 Best practice: split by logical components
 
-terraform-project/
+<pre>terraform-project/
 ├── main.tf         # root module
 ├── variables.tf
 ├── outputs.tf
@@ -323,9 +323,8 @@ terraform-project/
 │   ├── ec2/
 │   │   └── main.tf, variables.tf, outputs.tf
 │   └── eks/
-│       └── main.tf, variables.tf, outputs.tf
-
-
+│       └── main.tf, variables.tf, outputs.tf 
+</pre>
 Each module manages one logical component (VPC, EC2, EKS, etc.).
 
 Makes multi-environment setup easy (dev, staging, prod) by passing different variable values.
