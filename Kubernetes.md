@@ -368,3 +368,49 @@ You can set resource quotas per namespace (e.g., limit CPU/memory usage for a te
 `kubectl apply -f app.yaml -n dev`                          - Deploys a manifest to the `dev` namespace
 
 `kubectl config set-context --current --namespace=dev`      - Sets default namespace for your current session
+
+# What is a DaemonSet in Kubernetes?
+
+A DaemonSet ensures that a copy of a specific Pod runs on all (or selected) nodes in a Kubernetes cluster.
+
+It’s mainly used for deploying system-level or background services that must be present on every node — like monitoring agents, log collectors, or networking components.
+
+**🔹 Simple Definition:**
+
+A DaemonSet makes sure that one pod of a given type runs on each node in your cluster.
+
+**🔹 Example Use Cases:**
+
+- **Log Collection** → Deploy Fluentd, Filebeat, or Logstash on every node to collect logs.  
+- **Monitoring** → Deploy Prometheus Node Exporter on every node.  
+- **Networking** → Run CNI plugins or network proxies (like Calico, Weave, etc.).
+
+ ```
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-monitor
+  labels:
+    app: monitor
+spec:
+  selector:
+    matchLabels:
+      app: monitor
+  template:
+    metadata:
+      labels:
+        app: monitor
+    spec:
+      containers:
+      - name: node-exporter
+        image: prom/node-exporter:latest
+        ports:
+        - containerPort: 9100
+```
+**🔹 How it Works**
+
+- **When a new node is added to the cluster** → Kubernetes automatically creates a pod from the DaemonSet on that node.  
+- **When a node is removed** → the pod on that node is also deleted.  
+- **If you delete the DaemonSet**, all its managed pods are also deleted.
+
+<img width="1058" height="402" alt="image" src="https://github.com/user-attachments/assets/19a8fb9d-fb31-4dc7-86ba-28f386ef4c12" />
