@@ -14,7 +14,8 @@ There are multiple ways to trigger a Jenkins pipeline after another.
 <img width="1916" height="784" alt="image" src="https://github.com/user-attachments/assets/c74a0467-1a37-4502-8f80-3c0391198ed4" />
 
 
-**Option 2: Using Pipeline Script (Jenkinsfile)**  
+
+**2: Using Pipeline Script (Jenkinsfile)**  
 If you use a declarative pipeline:
 
 ```
