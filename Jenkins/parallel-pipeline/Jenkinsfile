@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build & Test in Parallel') {
+            parallel {
+                stage('Build') {
+                    steps {
+                        echo "Running build..."
+                    }
+                }
+                stage('Unit Tests') {
+                    steps {
+                        echo "Running unit tests..."
+                    }
+                }
+                stage('Code Scan') {
+                    steps {
+                        echo "Running SonarQube analysis..."
+                    }
+                }
+            }
+        }
+    }
+}
