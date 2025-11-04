@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'BUILD_ID', defaultValue: '', description: 'Build ID from previous pipeline')
+        string(name: 'IMAGE_TAG', defaultValue: '', description: 'Image tag from previous pipeline')
+    }
+    stages {
+        stage('Deploy') {
+            steps {
+                echo "Triggered from Pipeline-A"
+                echo "Received BUILD_ID: ${params.BUILD_ID}"
+                echo "Received IMAGE_TAG: ${params.IMAGE_TAG}"
+            }
+        }
+    }
+}
