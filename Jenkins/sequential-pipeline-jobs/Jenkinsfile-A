@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo "Building application..."
+            }
+        }
+    }
+    post {
+        success {
+            echo "✅ Build successful — triggering Pipeline-B..."
+            
+            build job: 'Pipeline-B', 
+            parameters: [
+                string(name: 'BUILD_ID', value: env.BUILD_ID),
+                string(name: 'IMAGE_TAG', value: "v1.0.${env.BUILD_NUMBER}")
+            ]
+        }
+    }
+}
