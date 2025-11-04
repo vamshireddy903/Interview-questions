@@ -1,0 +1,24 @@
+  pipeline {
+    agent any
+    stages {
+        stage('Run Multiple Pipelines') {
+            parallel {
+                stage('Service A') {
+                    steps {
+                        build job: 'Pipeline-A'
+                    }
+                }
+                stage('Service B') {
+                    steps {
+                        build job: 'Pipeline-B'
+                    }
+                }
+                stage('Service C') {
+                    steps {
+                        build job: 'Pipeline-C'
+                    }
+                }
+            }
+        }
+    }
+}
