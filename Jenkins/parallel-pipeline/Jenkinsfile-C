@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Pipeline-C') {
+            steps {
+                echo 'Hello from Pipeline -C'
+            }
+        }
+    }
+}
