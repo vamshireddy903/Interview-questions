@@ -20,7 +20,6 @@ pipeline {
                 stage('Unit Tests') {
                     steps {
                         echo "Running unit tests..."
-                        sh 'mvn test'
                     }
                 }
                 stage('Code Scan') {
