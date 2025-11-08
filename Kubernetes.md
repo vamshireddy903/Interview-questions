@@ -414,3 +414,107 @@ spec:
 - **If you delete the DaemonSet**, all its managed pods are also deleted.
 
 <img width="1058" height="402" alt="image" src="https://github.com/user-attachments/assets/19a8fb9d-fb31-4dc7-86ba-28f386ef4c12" />
+
+# Statefull application
+
+🧱 Think of two types of apps:  
+**🟢 1. Stateless App**
+
+👉 These apps don’t remember anything after they stop or restart.  
+They just handle requests and forget about them.
+
+**🧠 Example:**
+Imagine an Nginx web server that shows your website.  
+If it stops and starts again — no problem, nothing is lost.  
+Because it doesn’t store any data inside it.  
+
+📦 In Kubernetes, we deploy such apps using a Deployment.
+
+**🔵 2. Stateful App**
+
+👉 These apps need to remember data — like a database.  
+If the app restarts, it must get back the same data it had before.  
+
+**🧠 Example:**
+MongoDB or MySQL — they store user data, passwords, etc.  
+If the Pod is deleted, we don’t want to lose the database data.  
+So, we connect it to Persistent Storage (Volume).  
+
+📦 In Kubernetes, we use a StatefulSet —  
+it gives each Pod:  
+
+A fixed name (like mongo-0, mongo-1)
+
+Its own storage volume (data is not lost even if pod restarts)
+
+# What is a StorageClass?
+
+A StorageClass in Kubernetes tells how to create storage (Persistent Volumes) automatically for your Pods.  
+It’s like a template or rulebook for Kubernetes to know which type of disk/storage to use when your app asks for one.
+
+**🧠 Example:**
+
+Let’s say your MongoDB StatefulSet needs a PersistentVolumeClaim (PVC) —  
+but you didn’t create any volume manually.  
+
+➡️ Kubernetes checks which StorageClass is marked as default.  
+➡️ Then it automatically provisions (creates) a new PersistentVolume (PV) using that StorageClass.  
+
+StorageClass is like your delivery settings:  
+- It decides which disk type to create (SSD, HDD, gp2, gp3, etc.)  
+- It decides how it’s created (manually or automatically)  
+- It tells the reclaim policy (delete or keep data when PVC is deleted)  
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: nginx # has to match .spec.template.metadata.labels
+  serviceName: "nginx"
+  replicas: 3 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: nginx # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: nginx
+        image: registry.k8s.io/nginx-slim:0.24
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 1Gi
+```
+
+https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
