@@ -88,3 +88,53 @@ Then use them in your pipeline:
 def awsAccountId = env.AWS_ACCOUNT_ID  
 def region = env.AWS_REGION
 
+# If your Kubernetes cluster needs to pull an image from a private ECR repo, then it must have credentials to access ECR — otherwise you’ll see an error like:
+
+     Failed to pull image "xxxx.dkr.ecr.ap-south-1.amazonaws.com/my-app:latest"
+     unauthorized: authentication required
+
+**🔹 The Problem**
+
+Kubernetes (by default) can’t pull from private repos — it needs a Secret of type docker-registry.
+
+**🔹 The Solution**  
+**1️⃣ Create an ECR login secret inside the cluster**
+
+You can create it manually (or automate in Jenkins).
+```
+aws ecr get-login-password --region ap-south-1 \
+| kubectl create secret docker-registry ecr-secret \
+--docker-server=123456789012.dkr.ecr.ap-south-1.amazonaws.com \
+--docker-username=AWS \
+--docker-password-stdin \
+--namespace default
+```
+
+✅ This creates a Kubernetes secret named ecr-secret that stores your ECR credentials.
+
+**2️⃣ Reference that secret in your deployment.yaml**
+
+Add imagePullSecrets under your pod spec:
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-app
+          image: 123456789012.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:latest
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: ecr-secret
+```
