@@ -51,3 +51,40 @@ From ECS, EKS, or anywhere:
 # To delete the repo
 
     aws ecr delete-repository --repository-name <repo-name>
+
+
+# CI-CD jenkins
+
+```
+      stage('Build & Push to ECR') {
+    steps {
+        script {
+            def awsAccountId = "123456789021" 
+            def region = "ap-south-1"
+            def repoName = "my-app-repo"
+
+            sh """
+            aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${awsAccountId}.dkr.ecr.${region}.amazonaws.com
+            docker build -t ${repoName}:latest .
+            docker tag ${repoName}:latest ${awsAccountId}.dkr.ecr.${region}.amazonaws.com/${repoName}:latest
+            docker push ${awsAccountId}.dkr.ecr.${region}.amazonaws.com/${repoName}:latest
+            """
+        }
+    }
+    }
+```
+
+1. Use Jenkins Environment Variables
+
+Go to Jenkins → Manage Jenkins → Configure System → Global Properties → Environment Variables
+Add:
+
+AWS_ACCOUNT_ID = 123456789031 
+AWS_REGION = ap-south-1
+
+
+Then use them in your pipeline:
+
+def awsAccountId = env.AWS_ACCOUNT_ID  
+def region = env.AWS_REGION
+
