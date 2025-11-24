@@ -518,3 +518,28 @@ spec:
 ```
 
 https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+
+# check the labels of the pods
+
+      kubectl get pods --show-labels
+
+
+ # List the pods having labels run=redis-pod
+
+        kubectl get pods -l key=value
+
+        kubectl get pods -l app=nginx
+
+ <img width="997" height="290" alt="image" src="https://github.com/user-attachments/assets/e0666ddc-1530-4d50-9814-4de4cfe8c8f5" />
+
+ # List pods that DO NOT have a label
+
+       kubectl get pods -l '!app'
+
+# List pods that contain a label key (any value)
+
+     kubectl get pods -l app
+
+# List pods using multiple label selectors
+
+    kubectl get pods -l app=nginx,env=dev
