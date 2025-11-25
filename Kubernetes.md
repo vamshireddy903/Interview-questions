@@ -574,3 +574,4 @@ spec:
       command: ["stress"]
       args: ["--vm", "1", "--vm-bytes", "210M", "--vm-hang", "1"]
 ```
+<img width="1266" height="687" alt="image" src="https://github.com/user-attachments/assets/1df21319-d7fc-41ae-82be-1da1e85df431" />
