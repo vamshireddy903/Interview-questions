@@ -553,3 +553,24 @@ https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 
  
  <img width="1864" height="583" alt="image" src="https://github.com/user-attachments/assets/3ae58574-176c-42a0-ae90-a57956efec12" />
+
+ ```
+ubuntu@ip-172-31-3-48:~$ cat pod.yaml 
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: nginx-pod
+spec:
+  containers:
+    - name: stress-test
+      image: polinux/stress
+      resources:
+        requests:
+          memory: "150Mi"
+          cpu: "100m"
+        limits:
+          memory: "200Mi"
+          cpu: "150m"
+      command: ["stress"]
+      args: ["--vm", "1", "--vm-bytes", "210M", "--vm-hang", "1"]
+```
