@@ -543,3 +543,13 @@ https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 # List pods using multiple label selectors
 
     kubectl get pods -l app=nginx,env=dev
+
+# Resource requests and limits
+
+ 
+ <img width="989" height="597" alt="image" src="https://github.com/user-attachments/assets/b54311df-4c70-4131-b45f-d0c0a6818448" />
+
+ <img width="1011" height="614" alt="image" src="https://github.com/user-attachments/assets/0f3b621a-a918-4249-b63c-e71a5e81f189" />
+
+ 
+ <img width="1864" height="583" alt="image" src="https://github.com/user-attachments/assets/3ae58574-176c-42a0-ae90-a57956efec12" />
