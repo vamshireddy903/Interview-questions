@@ -575,3 +575,41 @@ spec:
       args: ["--vm", "1", "--vm-bytes", "210M", "--vm-hang", "1"]
 ```
 <img width="1266" height="687" alt="image" src="https://github.com/user-attachments/assets/1df21319-d7fc-41ae-82be-1da1e85df431" />
+
+
+# 🔐 What is TLS?
+
+TLS (Transport Layer Security) is a security protocol that provides encryption, authentication, and data integrity between a client and a server over a network.
+
+# ⭐ Why TLS is Used?
+**✔️ 1. Encryption**
+
+TLS encrypts all data sent between client and server.  
+Nobody in the middle can read your passwords, credit card details, or API data.
+
+**✔️ 2. Authentication**
+
+TLS verifies the server’s identity using certificates.  
+This ensures you are talking to the real website (e.g., real google.com).
+
+**✔️ 3. Data Integrity**
+
+TLS ensures the data is not modified in transit.  
+
+# 🔐 TLS Certificate
+
+A TLS certificate contains:
+
+- Domain name (FQDN)  
+- Public key  
+- Issued by CA (e.g., Let’s Encrypt)  
+- Expiry date  
+- Browser shows a lock icon when certificate is valid.
+
+ # Generate a private key:
+
+     openssl genrsa -out adam.key 2048
+
+ # Generate a Certificate Signing Request (CSR): 
+
+     openssl req -new -key adam.key -out adam.csr -subj "/CN=adam"
