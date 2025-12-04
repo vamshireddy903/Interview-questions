@@ -507,7 +507,8 @@ https://github.com/vamshireddy903/python-projects.git
 
 **Setup RAM and CPU for container**
 
-      docker run -d --name myapp --memory="512m" --cpus="1.5"  nginx
+      docker run -d --rm --name myapp --memory="512m" --cpus="1.5"  nginx
 
 - --memory="512m" → container can use max 512 MB RAM  
 - --cpus="1.5" → container can use 1.5 CPU cores
+- --rm it will delete
