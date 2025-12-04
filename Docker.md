@@ -484,4 +484,30 @@ example:
 
       docker build --no-cache -t python-app . 
 
+**Docker file in different directory**
+
+     docker build -t python-application -f docker.Mydockerfile . 
+
+https://github.com/vamshireddy903/python-projects.git
+
+
+**Build docker image with latest git commit id as tag**
+
+      docker build -t python-app:$(git rev-parse --short HEAD) .
       
+<img width="1196" height="108" alt="image" src="https://github.com/user-attachments/assets/c7f22abf-ea5b-4186-b8de-9b09b4d06cad" />
+
+
+<img width="1225" height="457" alt="image" src="https://github.com/user-attachments/assets/2bba7e29-081e-42ec-9774-96fa19ef7cfc" />
+
+
+**Build docker image with timestamp**
+
+      docker build -t my-image:release-$(date +%Y-%m-%d) . 
+
+**Setup RAM and CPU for container**
+
+      docker run -d --name myapp --memory="512m" --cpus="1.5"  nginx
+
+- --memory="512m" → container can use max 512 MB RAM  
+- --cpus="1.5" → container can use 1.5 CPU cores
