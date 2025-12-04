@@ -474,3 +474,14 @@ Let’s take the “docker run” command as an example.
 - Docker creates a network interface to connect the container to the default network.  
 - Docker starts the container.
 
+**Build the docker image without cache**
+
+    docker build --no-cache -t <image-name> . 
+
+https://github.com/vamshireddy903/two-tier-flask-app-project.git
+
+example:
+
+      docker build --no-cache -t python-app . 
+
+      
