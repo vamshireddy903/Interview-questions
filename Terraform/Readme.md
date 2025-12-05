@@ -849,3 +849,119 @@ You need to detect drift or recover accurate state
 
 <img width="1108" height="719" alt="image" src="https://github.com/user-attachments/assets/e27e0748-1ea8-4b56-9def-8a1c8a860f59" />
 
+# How do you tell Terraform statefile NOT to manage one EC2 instance?
+
+Answer: Using terraform state rm
+
+If Terraform should stop managing a specific EC2 instance, you remove it from the state file:
+
+**1️⃣ Single EC2 instance**
+
+If you created just one EC2 like this:
+```
+resource "aws_instance" "example" {
+  ami           = "ami-123456"
+  instance_type = "t2.micro"
+}
+```
+
+To stop Terraform from managing it, you simply run:
+
+    terraform state rm aws_instance.example
+
+**2️⃣ Multiple EC2 instances using count**
+
+Example:
+```
+resource "aws_instance" "example" {
+  count         = 3
+  ami           = "ami-123456"
+  instance_type = "t2.micro"
+  tags = {
+    Name = "Instance-${count.index + 1}"
+  }
+}
+```
+
+Here, Terraform creates multiple instances indexed as [0], [1], [2]
+
+To remove a specific instance from Terraform management:
+
+      terraform state rm 'aws_instance.example[0]'
+    
+or
+  
+     terraform state rm 'aws_instance.example[1]'
+
+**3️⃣ Multiple EC2 instances using for_each**
+
+Example:
+```
+resource "aws_instance" "example" {
+  for_each      = {
+    web1 = "ami-123"
+    web2 = "ami-456"
+  }
+  ami           = each.value
+  instance_type = "t2.micro"
+}
+```
+
+Here, Terraform uses keys instead of numeric indices: "web1" and "web2".
+
+To remove one instance:
+
+    terraform state rm 'aws_instance.example["web1"]'
+
+✔ This does NOT delete the EC2 server  
+✔ It only removes it from Terraform tracking  
+✔ Terraform will ignore that server in future plans  
+
+<img width="856" height="299" alt="image" src="https://github.com/user-attachments/assets/a938d48f-7fae-4b60-b13f-eefabdabb033" />
+
+# How do you tell Terraform to manage it again? (Add back to state)  
+Answer: Using terraform import
+
+Once the Terraform config is correct, you import the EC2 instance back:
+
+**For for_each:**
+
+    terraform import 'aws_instance.example["Web-1"]' <instance-id
+
+
+**For count:**
+
+    terraform import 'aws_instance.example[0]' <instance_id>
+
+
+**For single resource:**
+
+
+    terraform import aws_instance.example i-0aef0ed63c7aca43a
+    
+<img width="931" height="389" alt="image" src="https://github.com/user-attachments/assets/390d49aa-2847-4c1c-a2c8-52a12f5e2fbb" />
+
+
+<img width="932" height="475" alt="image" src="https://github.com/user-attachments/assets/eb774ab7-bf31-4087-8604-9d34a4fdd660" />
+
+# How do you delete a specific resource?
+
+Answer: Using terraform destroy -target
+
+This deletes the actual resource in addition to removing it from state
+
+Examples:
+
+**1️⃣ Single EC2 instance:**
+
+    terraform destroy --target aws_instance.example
+
+
+**2️⃣ Multiple EC2 instances using count:**
+
+    terraform destroy --target 'aws_instance.example[0]'
+
+
+**3️⃣ Multiple EC2 instances using for_each:**
+
+    terraform destroy --target 'aws_instance.example["web1"]'
