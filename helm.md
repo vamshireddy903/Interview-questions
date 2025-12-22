@@ -280,3 +280,78 @@ null
 Then you wnat see chnages in that version
 
      helm get values dev-nginx --revision <revison number>
+
+# Search charts in the repo
+
+     helm search repo <repo-name> 
+
+example:
+
+       helm search repo bitnami
+
+or 
+
+     helm search repo bitnami | grep nginx
+
+# Set replicaCount using CLI (After deploying)
+
+      helm upgrade <release-name> <chart-name> --set replicaCount=2
+
+# Set image repository and tag via CLI
+
+    helm install <release name> <chart name> --set image.repository=nginx --set image.tag=1.25
+
+# Helm Troubleshooting
+
+**1. Dry run**
+
+     helm install <release name> <chartname> --dry-run --debug
+
+    helm upgrade <release name> <chartname> --dry-run --debug
+
+**2. Values not applying(--set not working)**
+
+Verify
+
+    helm get values <releasename>
+
+ **3. Debug with lint**
+
+    helm lint <chart-name>
+
+# USefull commands
+
+**1. List the revisions**
+
+    helm history <release-name>
+
+**2. Rollback to a previoius version**
+
+    helm rollback <release-name> revision-number
+
+**3. Check rollback status**
+
+     helm status <release-name>
+
+**4 Compare two revision**
+
+**Using diff**
+
+      diff <(helm get manifest <release-name> --revision <revision-number>) <(helm get manifest <release-name> --revision <revision-number>)
+
+**Using helm diff Plugin**
+
+  Install once:
+
+       helm plugin install
+       https://github.com/databus23/helm-diff
+
+Then
+
+      helm diff revision <revision number> <revision number>
+
+
+# See only values chnaged in a revision
+
+    helm get values <release-name> --revision <revision-number>
+
