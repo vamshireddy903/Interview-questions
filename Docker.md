@@ -512,3 +512,39 @@ https://github.com/vamshireddy903/python-projects.git
 - --memory="512m" → container can use max 512 MB RAM  
 - --cpus="1.5" → container can use 1.5 CPU cores
 - --rm it will delete
+
+
+# Docker scout
+
+AMDocker Scout is a tool for analyzing container images to find security vulnerabilities and get recommendations for improving your images.
+
+Here are the key things it does:  
+Main Features:
+
+- Scans container images for security vulnerabilities (CVEs)  
+- Analyzes your image layers and dependencies  
+- Gives recommendations to fix security issues  
+- Compares images to see which is more secure  
+- Integrates with Docker Desktop, Docker Hub, and CI/CD pipelines
+
+# Basic Usage:
+
+**Scan a local image**
+
+    docker scout quickview <image-name>
+
+# Get detailed vulnerability report
+
+    docker scout cves <image-name>
+
+# Compare two images
+   
+     docker scout compare <image1> <image2>
+
+# Get recommendations
+
+     docker scout recommendations <image-name>
+
+# docker scout login
+
+      https://docs.docker.com/scout/install/
