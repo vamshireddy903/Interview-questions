@@ -1,4 +1,4 @@
-# enkins Architecture Explained
+# jenkins Architecture Explained
 
 Jenkins follows a Master–Agent (Controller–Node) architecture.
 
