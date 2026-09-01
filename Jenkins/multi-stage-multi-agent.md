@@ -12,16 +12,15 @@ pipeline {
                 sh 'node --version'
             }
             }
-        stage ('Security scan'){
+        stage ('Database'){
             agent {
                 docker {
-                    image 'aquasec/trivy:latest'
-                    args '--entrypoint=""'
+                    image 'mysql:8.0'
                 }
             }
             steps {
-                echo "Running security scanning"
-                sh 'trivy --version'
+                echo "Checking version"
+                sh 'mysql --version'
             }
         }
         
